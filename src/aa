@@ -1,0 +1,12 @@
+cosnt
+for(let key in temp1){
+    const d1 = key.split(',').reverse().reduce((res, key) => ({[key]: res}), {});
+    console.log(d1)
+}
+
+
+console.log(Object.keys(data).map(item=>item.split(',').reverse().reduce((res, key) => ({[key]: res}), {})));
+
+const value = data.reduce((pv,cv)=>{
+  return _.merge(pv,cv)
+}, {})
