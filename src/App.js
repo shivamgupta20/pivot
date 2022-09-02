@@ -18,32 +18,27 @@ createObject(defaultDate, Source, Activity){
     children: children
   }
 }
-  groupBy2(){
-    ///sorting
-    let result = [];
-    data.forEach(item =>{
-      const {defaultDate, Source, Activity} = item;
-      if(result.length === 0 || result[result.length-1].title !== defaultDate){
-        result.push(createObject(defaultDate, Source, Activity))
-      }
-    })
-  }
+  // groupBy2(){
+  //   ///sorting
+  //   let result = [];
+  //   data.forEach(item =>{
+  //     const {defaultDate, Source, Activity} = item;
+  //     if(result.length === 0 || result[result.length-1].title !== defaultDate){
+  //       result.push(createObject(defaultDate, Source, Activity))
+  //     }
+  //   })
+  // }
 
   groupBy() {
     const groupedData = _.groupBy(data, (eachData) => columns.map(eachCol => eachData[eachCol]))
     console.log("groupedData", groupedData);
-let obj
-    for (let dataKey in groupedData) {
-       obj = dataKey.split(',').reverse().reduce((res, key) => ({ [key]: res }), {});
-      // console.log("dataKey", dataKey, obj);
-    }
-    // groupedData.reduce((pv, cv, ci, arr)=>{
-
-    // },
-
-    // {})
+    let obj = Object.entries(groupedData)
+    .map(([item, value])=>item.split(',')
+    .reverse()
+    .reduce((res, key, index) => (index === 0 ? {[key]: value} : {[key]: res}), {}))
+    .reduce((pv,cv)=>_.merge(pv,cv), {})
     console.log("obj", obj);
-
+    return obj;
   }
   render() {
     console.log(this.groupBy())
