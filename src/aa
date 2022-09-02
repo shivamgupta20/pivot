@@ -1,12 +1,76 @@
-cosnt
-for(let key in temp1){
+
+for(let key in data){
     const d1 = key.split(',').reverse().reduce((res, key) => ({[key]: res}), {});
     console.log(d1)
 }
 
 
-console.log(Object.keys(data).map(item=>item.split(',').reverse().reduce((res, key) => ({[key]: res}), {})));
+console.log(Object.keys(data) .map(item=>item.split(',').reverse().reduce((res, key) => ({[key]: res}), {})));
 
 const value = data.reduce((pv,cv)=>{
+  return _.merge(pv,cv)
+}, {})
+
+
+
+    .reduce(
+      (res, key) => ({[key]: res}), 
+      
+      {}))
+
+
+
+
+      const columns = ['defaultDate', 'Source', 'Activity'];
+
+let groupedData = 
+  _.groupBy(data, (eachData) => columns.map(eachCol => eachData[eachCol]))
+groupedData = Object.keys(groupedData)
+    .map(item=>item.split(',')
+    .reverse()
+    .reduce(
+      (res, key) => { 
+        // console.log("reduce",res,key);
+        if(Object.keys(res).length === 0){
+          return {
+            title: key,
+            dataIndex: key
+          }
+        }
+        else{
+          return {
+            title: key,
+            children: [{
+              title: res
+            }]
+          }
+        }
+      }, 
+      {}
+      )
+    )
+groupedData = groupedData.reduce((pv,cv)=>{
+  console.log("groupedData",pv,cv)
+  return _.merge(_.keyBy(pv, 'title'), _.keyBy(cv, 'title'));
+}, groupedData[0]);
+// console.log("groupedData", groupedData[0])
+
+
+const tableColumns = [];
+
+
+for(let key in groupedData){
+  const d1 = key.split(',').reverse().reduce((res, key) => ({[key]: res}), {});
+  // console.log(d1)
+}
+
+const value = data.reduce((pv,cv)=>{
+  return _.merge(pv,cv)
+}, {})
+// console.log("value",value, value['27-01-2022']['S1']['DvC2'])
+
+
+
+Object.keys(temp1).map(item=>item.split(',').reverse().reduce((res, key) => ({[key]: res}), {})).reduce((pv,cv)=>{
   return _.merge(pv,cv)
 }, {})
